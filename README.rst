@@ -1,12 +1,19 @@
-Set of scripts for simple Emacs customization.
+AEIS is «Another Emacs Initialization Set».
 
-It's not kind of a «starter kit» bloated with packages unused by you. The `init-d' offers simple skeleton for further Emacs customizing.
+It's not a kind of a «starter kit» bloated with packages unused by you. AEIS just offers skeleton for further Emacs customizing.
 
-**Development version. Not for users yet.**
+Planned features:
+
+* API for simple installing/deinstalling/enabling/disabling init scripts for installed packages `[in progress]`
+* UI for control init-system
+* support for different Emacs versions for single .emacs.d
+* caching of init-d starter scripts in one big file `[done]`
+
+**Developers preview. Not for users yet.**
 
 
-Directory structure
-===================
+Directories structure
+=====================
 
 ::
 
@@ -30,4 +37,4 @@ Directory structure
 
 * init-d — init-scripts implicitly loading a required features from `load-path`
 * site-lisp — appendix to `load-path` for local installed modules (use lazy load here)
-* 23, 24 — configuration (init-scripts & modules) specific for these versions of Emacs
+* 23, 24 — configuration (init-scripts & modules) specific for these major versions of Emacs
