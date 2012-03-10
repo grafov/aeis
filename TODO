@@ -1,0 +1,7 @@
+init-reload-all
+init-save -- make init script from current buffer and place it to init.d
+init-list -- list all init.d scripts ordered by its weight
+init-make -- (API) make init script for feature or file and place it to init.d (helper for installers)
+init-disable -- disable script
+init-enable -- enable script
+
