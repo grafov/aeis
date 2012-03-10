@@ -11,10 +11,10 @@ Directory structure
 ::
 
   .emacs.d/
-	  |
-		+-- .cache
-		|
-		+-- init-d
-		|
-		\-- site-lisp
- 
+    |
+    +-- .cache
+    |
+    +-- init-d
+    |
+    \-- site-lisp
+
