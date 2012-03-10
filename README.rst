@@ -12,20 +12,20 @@ Directory structure
 
   .emacs.d/
     |
-    +-- .cache
+    +-- .cache (mandatory)
     |
-    +-- init-d
+    +-- init-d (mandatory)
     |
-    +-- site-lisp
-		|
-		+-- 23
-		|    |
-		| 	 +- init-d
-		|		 |
-		|		 \-- site-lisp
-		|
-		\-- 24
-		...
+    +-- site-lisp (mandatory)
+    |
+    +-- 23 (optional)
+    |    |
+    |    +- init-d
+    |    |
+    |    \-- site-lisp
+    |
+    \-- 24 (optional)
+    ...
 
 
 * init-d — init-scripts implicitly loading a required features from `load-path`
