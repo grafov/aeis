@@ -1,0 +1,2 @@
+Placement for local extensions. For example for homemade scripts or manually downloaded extensions.
+Extensions installed with package managers (like elpa/elget/autoinstall) prefer to use own dirs for their packages.
