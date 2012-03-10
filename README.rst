@@ -16,9 +16,18 @@ Directory structure
     |
     +-- init-d
     |
-    \-- site-lisp
+    +-- site-lisp
+		|
+		+-- 23
+		|    |
+		| 	 +- init-d
+		|		 |
+		|		 \-- site-lisp
+		|
+		\-- 24
+		...
 
 
 * init-d — init-scripts implicitly loading a required features from `load-path`
 * site-lisp — appendix to `load-path` for local installed modules (use lazy load here)
-
+* 23, 24 — configuration (init-scripts & modules) specific for these versions of Emacs

@@ -1,4 +1,4 @@
-(defvar init-path (concat user-emacs-directory "init-d")
+(defconst init-path (concat user-emacs-directory "init-d")
 	"Directory for init-scripts.")
 
 ;;-----------------------------------------------------------------------------
