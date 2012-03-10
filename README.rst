@@ -1,6 +1,6 @@
 AEIS is «Another Emacs Initialization Set».
 
-AEIS purpose is order chaos of `emac.d' scripts and extensions loaded and
+AEIS purpose is ordering a chaos of `emacs.d' scripts and extensions loaded and
 installed by hands or with package-managers. It's not a kind of a «starter
 kit» bloated with packages unused by you. AEIS just offers skeleton for
 further Emacs customizing.
