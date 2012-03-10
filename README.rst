@@ -1,10 +1,15 @@
 AEIS is «Another Emacs Initialization Set».
 
-It's not a kind of a «starter kit» bloated with packages unused by you. AEIS just offers skeleton for further Emacs customizing.
+AEIS purpose is order chaos of `emac.d' scripts and extensions loaded and
+installed by hands or with package-managers. It's not a kind of a «starter
+kit» bloated with packages unused by you. AEIS just offers skeleton for
+further Emacs customizing.
 
-Planned features:
+Planned features
+================
 
-* API for simple installing/deinstalling/enabling/disabling init scripts for installed packages `[in progress]`
+* API for simple installing/deinstalling/enabling/disabling init scripts for
+installed packages `[in progress]`
 * UI for control init-system
 * support for different Emacs versions for single .emacs.d
 * caching of init-d starter scripts in one big file `[done]`
