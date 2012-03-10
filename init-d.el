@@ -17,9 +17,10 @@
 	(directory-files init-path t "^[0-9]+.*\.el$"))
 
 (defun init-reload-all ()
+	"Repeat loading of all active scripts. Results may be unpredictable."
 	(interactive)
-	(if (delete-file init-cache-file)
-	(init-load)))
+	(delete-file init-cache-file)
+	(init-d))
 
 ;;;###autoload
 (defun init-d ()
