@@ -1,3 +1,6 @@
+(defvar init-path (concat user-emacs-directory "init-d")
+	"Directory for init-scripts.")
+
 ;;-----------------------------------------------------------------------------
 ;; Set load path
 ;;-----------------------------------------------------------------------------
@@ -5,22 +8,30 @@
   (normal-top-level-add-to-load-path '("." "site-lisp"))
   (normal-top-level-add-subdirs-to-load-path))
 
+(require 'init-helpers)
+;(require 'init-ui)
+
 ;;----------------------------------------------------------------------------
 ;; Load init scripts for specific features and modes
 ;;----------------------------------------------------------------------------
-;; scripts loaded in filenames order (use prefix numbers for sorting,
+;; Scripts loaded in filenames order (use prefix numbers for sorting,
 ;; i.e. 10-init-things.el, 50-my-xxx-mode.el etc.)
-(let ((user-init-path (concat user-emacs-directory "init-d/*.el")))
-(condition-case nil
-    (mapc 'load (sort (file-expand-wildcards user-init-path) 'string<))
-  (error nil))
-)
+;;
+;; Firstly try to load precached file consists of all active scripts.
+(let ((init-cache-file (concat user-emacs-directory ".cache/init-scripts.el")))
+	(if (file-readable-p init-cache-file)
+			(load init-cache-file nil "Load init-scripts…")
+		(progn (make-directory (concat user-emacs-directory ".cache") t)
+					 (with-temp-file init-cache-file
+						 (dolist (script (init-list-active))
+							 (if (byte-compile-file script)
+									 (insert-file-contents script))))
+						 (byte-compile-file init-cache-file t))))
 
 ;;----------------------------------------------------------------------------
-;; Load keybindings
+;; Load other important features
 ;;----------------------------------------------------------------------------
 (require 'init-keybindings)
-
 (require 'init-locale)
 
 ;;----------------------------------------------------------------------------
@@ -29,12 +40,5 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file)
 
-;;----------------------------------------------------------------------------
-;; Allow access from emacsclient
-;;----------------------------------------------------------------------------
-;;;(if (not (file-exists-p "/var/run/emacs/axel/emacs.pid"))
-;;;		(server-start))
-
 (provide 'init)
 ;;
-

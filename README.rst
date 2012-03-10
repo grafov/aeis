@@ -18,3 +18,7 @@ Directory structure
     |
     \-- site-lisp
 
+
+init-d — init-scripts implicitly loading a required features from `load-path`
+site-lisp — appendix to `load-path` for local installed modules (use lazy load here)
+
