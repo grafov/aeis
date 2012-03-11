@@ -40,4 +40,20 @@ Run init scripts for specific features and modes."
 					 (byte-compile-file init-cache-file t))
 		(delete-other-windows))) ;; hide *Compiler log* output
 
+(defun init-print-active () ; TODO
+	"Print all active scripts from init-d ordered by their weight."
+	(interactive)
+	(dolist (script (init-list-active))
+		(message "%s\n" script))
+
+(defun init-make-from-buffer () ; TODO
+	"Make new init-script from current buffer."
+	(interactive)) 
+
+(defun init-new (buf) ; TODO
+	"Create new buffer with simple template for new init-script."
+	(interactive "Mscript name: ")
+	(set-buffer (generate-new-buffer buf)))
+
+
 (provide 'init-d)
