@@ -6,7 +6,10 @@
 (defconst init-cache-file (concat user-emacs-directory ".cache/init-d.el")
 	"Common cache file for all init-scripts.")
 
-(defconst init-version "0.2")
+(defun init-version ()
+	"Inverse compatible version data."
+	(interactive)
+	(message "0.2"))
 
 (defun init-list-disabled ()
   "List all disabled scripts in init-d."
@@ -28,12 +31,13 @@
 
 Run init scripts for specific features and modes."
 	(if (file-readable-p init-cache-file)
-			(load init-cache-file nil "Load init-scripts...")
+			(load init-cache-file nil (message "Load init-scripts... %s" (init-version)))
 		(progn (make-directory (concat user-emacs-directory ".cache") t)
 					 (with-temp-file init-cache-file
 						 (dolist (script (init-list-active))
 							 (if (byte-compile-file script)
 									 (insert-file-contents script))))
-					 (byte-compile-file init-cache-file t))))
+					 (byte-compile-file init-cache-file t))
+		(delete-other-windows))) ;; hide *Compiler log* output
 
 (provide 'init-d)

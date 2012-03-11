@@ -53,6 +53,5 @@
 (setq custom-file (concat user-emacs-directory "custom.el"))
 (load custom-file)
 
-(delete-other-windows) ;; hide *Compiler log* output
 (provide 'init)
 ;;
