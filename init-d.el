@@ -22,12 +22,6 @@
 	"List all active scripts from init-d."
 	(directory-files init-path t "^[0-9]+.*\.el$"))
 
-(defun init-reload-all ()
-	"Repeat loading of all active scripts. Results may be unpredictable."
-	(interactive)
-	(delete-file init-cache-file)
-	(init-d))
-
 ;;;###autoload
 (defun init-d ()
 	"Another Emacs Initialization Set.
@@ -41,6 +35,12 @@ Run init scripts for specific features and modes."
 									 (insert-file-contents script))))
 					 (byte-compile-file init-cache-file t))
 		(delete-other-windows))) ;; hide *Compiler log* output
+
+(defun init-reload-all ()
+	"Repeat loading of all active scripts. Results may be unpredictable."
+	(interactive)
+	(delete-file init-cache-file)
+	(init-d))
 
 (defun init-print-active () ; TODO
 	"Print all active scripts from init-d ordered by their weight."
@@ -58,10 +58,19 @@ Run init scripts for specific features and modes."
 	"Make new init-script from current buffer."
 	(interactive))
 
-(defun init-new (buf) ; TODO
+(defun init-new-script (buf weight) ; TODO
 	"Create new buffer with simple template for new init-script."
-	(interactive "Mscript name: ")
-	(set-buffer (generate-new-buffer buf)))
+	(interactive "Mscript name: \nMweight: ")
+	(switch-to-buffer 
+	 (set-buffer 
+		(generate-new-buffer 
+		 (generate-new-buffer-name buf))))
+	(insert (format "Template %s" weight))
+	)
 
+(defun init-edit-script (name) 
+	"Edit existing init-script and save it after modification."
+	(interactive "Mscript name: ")
+	)
 
 (provide 'init-d)
