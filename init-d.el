@@ -3,6 +3,9 @@
 (defconst init-path (concat user-emacs-directory "init-d/")
 	"Directory for init-scripts.")
 
+(defconst init-normal-weight 50
+	"Default weight (normal priority) for init-scripts.")
+
 (defconst init-cache-file (concat user-emacs-directory ".cache/init-d.el")
 	"Common cache file for all init-scripts.")
 
@@ -58,10 +61,10 @@ Run init scripts for specific features and modes."
 	"Make new init-script from current buffer."
 	(interactive))
 
-(defun init-edit-script ((weight 50))
+(defun init-edit-script (weight)
 	"Make new or edit existing init-script. Prompts for script name and use prefix number for setting weight."
-	(interactive "p")
-	(let ((weight (number-to-string weight)))
+	(interactive "P")
+	(let ((weight (format "%02d" (if weight weight init-normal-weight))))
 		(switch-to-buffer
 		 (set-buffer
 			(create-file-buffer
