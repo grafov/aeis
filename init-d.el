@@ -60,17 +60,21 @@ Run init scripts for specific features and modes."
 
 (defun init-new-script (buf weight) ; TODO
 	"Create new buffer with simple template for new init-script."
-	(interactive "Mscript name: \nMweight: ")
+	(interactive "Mscript name: \nnweight: ")
 	(switch-to-buffer 
 	 (set-buffer 
-		(generate-new-buffer 
-		 (generate-new-buffer-name buf))))
+		(create-file-buffer (convert-standard-filename (format "%d-%s.el" weight buf)))))
 	(insert (format "Template %s" weight))
-	)
+)
 
 (defun init-edit-script (name) 
 	"Edit existing init-script and save it after modification."
-	(interactive "Mscript name: ")
+	(cd "/tmp")
+	(message "%s" (pwd))
+	(interactive "fscript name: ")
+	(cd "/")
 	)
+
+(defun ttt () (interactive) (pwd))
 
 (provide 'init-d)
