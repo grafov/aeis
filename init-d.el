@@ -1,6 +1,6 @@
 ;; Another Emacs Initialization Set
 
-(defconst init-path (concat user-emacs-directory "init-d")
+(defconst init-path (concat user-emacs-directory "init-d/")
 	"Directory for init-scripts.")
 
 (defconst init-cache-file (concat user-emacs-directory ".cache/init-d.el")
@@ -58,23 +58,18 @@ Run init scripts for specific features and modes."
 	"Make new init-script from current buffer."
 	(interactive))
 
-(defun init-new-script (buf weight) ; TODO
-	"Create new buffer with simple template for new init-script."
-	(interactive "Mscript name: \nnweight: ")
-	(switch-to-buffer 
-	 (set-buffer 
-		(create-file-buffer (convert-standard-filename (format "%d-%s.el" weight buf)))))
-	(insert (format "Template %s" weight))
-)
-
-(defun init-edit-script (name) 
-	"Edit existing init-script and save it after modification."
-	(cd "/tmp")
-	(message "%s" (pwd))
-	(interactive "fscript name: ")
-	(cd "/")
-	)
-
-(defun ttt () (interactive) (pwd))
+(defun init-edit-script ((weight 50))
+	"Make new or edit existing init-script. Prompts for script name and use prefix number for setting weight."
+	(interactive "p")
+	(let ((weight (number-to-string weight)))
+		(switch-to-buffer
+		 (set-buffer
+			(create-file-buffer
+			 (convert-standard-filename (concat
+				(read-file-name "script name: " (concat init-path weight "-")
+												(concat weight "-myscript") 'confirm-after-completion) ".el")))))
+		(insert (format ";; %s —" (substring (buffer-name) 3 nil))))
+	(insert "; mode: lisp; coding: utf-8")
+	(insert))
 
 (provide 'init-d)
