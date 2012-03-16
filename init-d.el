@@ -45,6 +45,7 @@ Run init scripts for specific features and modes."
 	(delete-file init-cache-file)
 	(init-d))
 
+
 (defun init-print-active () ; TODO
 	"Print all active scripts from init-d ordered by their weight."
 	(interactive)
@@ -61,18 +62,28 @@ Run init scripts for specific features and modes."
 	"Make new init-script from current buffer."
 	(interactive))
 
+(defun init-get-script-filename (weight) 
+	"Get fullpath and name of the file with init-script. For internal use."
+	(let ((weight (format "%02d" (if weight weight init-normal-weight))))
+		(convert-standard-filename (concat
+																(read-file-name "script name: " (concat init-path weight "-")
+																								(concat weight "-myscript") 
+																								'confirm-after-completion) ".el"))))
+
 (defun init-edit-script (weight)
 	"Make new or edit existing init-script. Prompts for script name and use prefix number for setting weight."
 	(interactive "P")
-	(let ((weight (format "%02d" (if weight weight init-normal-weight))))
-		(switch-to-buffer
-		 (set-buffer
-			(create-file-buffer
-			 (convert-standard-filename (concat
-				(read-file-name "script name: " (concat init-path weight "-")
-												(concat weight "-myscript") 'confirm-after-completion) ".el")))))
-		(insert (format ";; %s —" (substring (buffer-name) 3 nil))))
-	(insert "; mode: lisp; coding: utf-8")
-	(insert))
+	(let ((script) (buf))
+		(setq buf
+					(set-buffer
+					 (create-file-buffer (setq script (init-get-script-filename weight)))))
+		(if (file-exists-p script)
+				(find-file script)
+			(progn 
+				(insert (format ";; %s —" (substring (buffer-name) 3 nil)))
+				(insert "; mode: lisp; coding: utf-8")
+				(insert)
+				(insert)
+				(switch-to-buffer buf)))))
 
 (provide 'init-d)
