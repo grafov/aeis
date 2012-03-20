@@ -65,11 +65,10 @@ Run init scripts for specific features and modes."
 (defun init-get-script-filename (weight) 
 	"Get fullpath and name of the file with init-script. For internal use."
 	(let ((weight (format "%02d" (if weight weight init-normal-weight))))
-		(convert-standard-filename (substitute-if-not ".el" ".el" :count -3 :from-end
-																(read-file-name "script name: " (concat init-path weight "-")
-																								(concat weight "-myscript") 
-																								'confirm-after-completion) 
-																))))
+		(convert-standard-filename (read-file-name "script name: " (concat init-path weight "-")
+																							 (concat weight "-myscript.el") 
+																							 'confirm-after-completion) 
+																)))
 
 (defun init-edit-script (weight)
 	"Make new or edit existing init-script. Prompts for script name and use prefix number for setting weight."
@@ -81,7 +80,7 @@ Run init scripts for specific features and modes."
 		(if (file-exists-p script)
 				(find-file script)
 			(progn 
-				(insert (format ";; %s —" (substring (buffer-name) 3 nil)))
+				(insert (format ";; %s —" (substring (buffer-name) 3 -3)))
 				(insert "; mode: lisp; coding: utf-8")
 				(insert)
 				(insert)
