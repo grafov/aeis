@@ -15,7 +15,7 @@
 (defun init-version ()
 	"Inverse compatible version data."
 	(interactive)
-	(message "0.2"))
+	(message "0.3-dev-exp"))
 
 (defun init-list-disabled ()
   "List all disabled scripts in init-d."
@@ -81,7 +81,7 @@ Run init scripts for specific features and modes."
 		(if (file-exists-p script)
 				(find-file script)
 			(progn 
-				(insert (format ";; %s —" (substring (buffer-name) 3 nil)))
+				(insert (format ";; %s —" (substring (buffer-name) 3 -3)))
 				(insert "; mode: lisp; coding: utf-8")
 				(insert)
 				(insert)
