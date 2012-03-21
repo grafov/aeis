@@ -18,7 +18,7 @@
 	(message "0.3-dev-exp"))
 
 (defun init-list-disabled ()
-  "List all disabled scripts in init-d."
+	"List all disabled scripts in init-d."
 	(directory-files init-path t "^-[0-9]+.*\.el-$"))
 
 (defun init-list-active ()
@@ -62,11 +62,11 @@ Run init scripts for specific features and modes."
 	"Make new init-script from current buffer."
 	(interactive))
 
-(defun init-get-script-filename (weight) 
+(defun init-get-script-filename (weight)
 	"Get fullpath and name of the file with init-script. For internal use."
 	(let ((fname) (weight (format "%02d" (if weight weight init-normal-weight))))
 		(setq fname (read-file-name "script name: " (concat init-path weight "-")
-																(concat weight "-myscript") 
+																(concat weight "-myscript")
 																'confirm-after-completion))
 		(convert-standard-filename (if (string-match-p ".el$" fname)
 																	 fname (concat fname ".el")))))
@@ -80,11 +80,11 @@ Run init scripts for specific features and modes."
 					 (create-file-buffer (setq script (init-get-script-filename weight)))))
 		(if (file-exists-p script)
 				(find-file script)
-			(progn 
+			(progn
 				(insert (format ";; %s —" (substring (buffer-name) 3 -3)))
 				(insert "; mode: lisp; coding: utf-8")
-				(insert)
-				(insert)
-				(switch-to-buffer buf)))))
+        (insert)
+        (insert)
+        (switch-to-buffer buf)))))
 
 (provide 'init-d)
