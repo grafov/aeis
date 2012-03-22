@@ -17,11 +17,11 @@
 	(interactive)
 	(message "0.3-dev-exp"))
 
-(defun init-list-disabled ()
+(defun init-get-disabled ()
 	"List all disabled scripts in init-d."
 	(directory-files init-path t "^-[0-9]+.*\.el-$"))
 
-(defun init-list-active ()
+(defun init-get-active ()
 	"List all active scripts from init-d."
 	(directory-files init-path t "^[0-9]+.*\.el$"))
 
@@ -53,7 +53,7 @@ Run init scripts for specific features and modes."
 		(set-buffer (generate-new-buffer init-list-buffer-name))
 		(setq buffer-read-only nil)
 		(erase-buffer)
-		(dolist (script (init-list-active))
+		(dolist (script (init-get-active))
 			(insert script) (insert))
 		(setq buffer-read-only t)
 		(switch-to-buffer init-list-buffer-name)))
@@ -86,5 +86,21 @@ Run init scripts for specific features and modes."
         (insert)
         (insert)
         (switch-to-buffer buf)))))
+
+(defun init-disable-script (weight) ; TODO
+	(interactive "P")
+	(let ((script (init-get-script-filename weight)))
+		(rename-file script (replace-endswith script ".el" ".el-") :ok-if-already-exists)
+		(rename-file (replace-endswith script ".el" ".elc") (replace-endswith script ".elc" ".elc-") :ok-if-already-exists)))
+
+;; helpers
+;;
+
+(defun replace-endswith (from-string endswith to-string)
+	"If FROM-STRING ends with ENDSWITH then replace ENDSWITH with TO-STRING."
+	(let ((endswith-regexp (concat endswith "$")))
+	(if (string-match-p endswith-regexp from-string)
+			(replace-regexp-in-string endswith-regexp to-string from-string)
+		from-string)))
 
 (provide 'init-d)
