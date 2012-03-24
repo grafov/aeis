@@ -22,7 +22,7 @@ Directories structure
 
 ::
 
-  .emacs.d/
+  .emacs.d/ (USER-EMACS-DIRECTORY)
     |
     +-- .cache (mandatory)
     |
@@ -43,3 +43,15 @@ Directories structure
 * init-d — init-scripts implicitly loading a required features from `load-path`
 * site-lisp — appendix to `load-path` for local installed modules (use lazy load here)
 * 23, 24 — configuration (init-scripts & modules) specific for these major versions of Emacs
+
+
+Interactive functions
+---------------------
+
+* init-version — shows version of AEIS
+* init-disable — disable selected script (autocompleted by script names from init-d) and reset init cache
+* init-enable — enable selected script (autocompleted by script names from init-d) and reset init cache
+* init-reload-all — rebuild cache and reload all init-scripts
+* init-edit-script — visit init-script file
+
+No keybindings yet.
