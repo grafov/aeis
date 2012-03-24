@@ -15,7 +15,7 @@
 (defun init-version ()
 	"Inverse compatible version data."
 	(interactive)
-	(message "0.3-dev-exp"))
+	(message "0.4-dev-exp"))
 
 (defun init-get-disabled ()
 	"List all disabled scripts in init-d."
@@ -42,9 +42,13 @@ Run init scripts for specific features and modes."
 (defun init-reload-all ()
 	"Repeat loading of all active scripts. Results may be unpredictable."
 	(interactive)
-	(delete-file init-cache-file)
+	(init-reset-cache)
 	(init-d))
 
+(defun init-reset-cache ()
+	"Drop cache file for init-scripts."
+	(if (file-exists-p init-cache-file)
+			(delete-file init-cache-file)))
 
 (defun init-print-active () ; TODO
 	"Print all active scripts from init-d ordered by their weight."
@@ -99,25 +103,27 @@ Disabled scirpts ends with dash (example: 50-name.el-)."
         (insert)
         (switch-to-buffer buf)))))
 
-(defun init-disable-script (weight) ; TODO
+(defun init-disable-script (weight)
+	"Disable init-script. Disabled scirpts ends with dash. Example: 50-name.el-."
 	(interactive "P")
 	(let ((script (init-get-script-filename weight)) (cscript))
 		(if (file-readable-p script)
 				(rename-file script (replace-endswith script ".el" ".el-") :ok-if-already-exists))
 		(setq cscript (replace-endswith script ".el" ".elc"))
 		(if (file-readable-p cscript)
-				(rename-file (replace-endswith script ".el" ".elc") (replace-endswith script ".elc" ".elc-")) :ok-if-already-exists)))
+				(rename-file cscript (replace-endswith script ".elc" ".elc-") :ok-if-already-exists))
+	(init-reset-cache)))
 
-(defun init-enable-script (weight) ; TODO
+(defun init-enable-script (weight)
+	"Enable init-script."
 	(interactive "P")
 	(let ((script (init-get-script-filename weight t)) (cscript))
 		(if (file-readable-p script)
-				(rename-file script (replace-endswith script ".el-" ".el")
-										 :ok-if-already-exists))
+				(rename-file script (replace-endswith script ".el-" ".el") :ok-if-already-exists))
 		(setq cscript (replace-endswith script ".el-" ".elc-"))
 		(if (file-readable-p cscript)
-				(rename-file cscript (replace-endswith script ".elc-" ".elc"))
-			:ok-if-already-exists)))
+				(rename-file cscript (replace-endswith script ".elc-" ".elc") :ok-if-already-exists))
+	(init-reset-cache)))
 
 ;; helpers
 ;;
