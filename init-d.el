@@ -15,7 +15,7 @@
 (defun init-version ()
 	"Inverse compatible version data."
 	(interactive)
-	(message "0.5-dev-exp"))
+	(message "0.4-dev-exp"))
 
 (defun init-get-disabled ()
 	"List all disabled scripts in init-d."
