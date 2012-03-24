@@ -15,15 +15,15 @@
 (defun init-version ()
 	"Inverse compatible version data."
 	(interactive)
-	(message "0.4-dev-exp"))
+	(message "0.5-dev-exp"))
 
 (defun init-get-disabled ()
 	"List all disabled scripts in init-d."
-	(directory-files init-path t "^-[0-9]+.*\.el-$"))
+	(directory-files init-path t "^[0-9]+-.*\.el-$"))
 
 (defun init-get-active ()
 	"List all active scripts from init-d."
-	(directory-files init-path t "^[0-9]+.*\.el$"))
+	(directory-files init-path t "^[0-9]+-.*\.el$"))
 
 ;;;###autoload
 (defun init-d ()
@@ -33,7 +33,7 @@ Run init scripts for specific features and modes."
 			(load init-cache-file nil (message "Loading init-scripts ver. %s" (init-version)))
 		(progn (make-directory (concat user-emacs-directory ".cache") t)
 					 (with-temp-file init-cache-file
-						 (dolist (script (init-list-active))
+						 (dolist (script (init-get-active))
 							 (if (byte-compile-file script)
 									 (insert-file-contents script))))
 					 (byte-compile-file init-cache-file t))
@@ -50,7 +50,7 @@ Run init scripts for specific features and modes."
 	(if (file-exists-p init-cache-file)
 			(delete-file init-cache-file)))
 
-(defun init-print-active () ; TODO
+(defun init-list-active () ; TODO
 	"Print all active scripts from init-d ordered by their weight."
 	(interactive)
 	(save-excursion
