@@ -103,21 +103,21 @@ Disabled scirpts ends with dash (example: 50-name.el-)."
 	(interactive "P")
 	(let ((script (init-get-script-filename weight)) (cscript))
 		(if (file-readable-p script)
-				(rename-file script (replace-endswith script ".el" ".el-")) ; :ok-if-already-exists))
+				(rename-file script (replace-endswith script ".el" ".el-") :ok-if-already-exists))
 		(setq cscript (replace-endswith script ".el" ".elc"))
 		(if (file-readable-p cscript)
-				(rename-file (replace-endswith script ".el" ".elc") (replace-endswith script ".elc" ".elc-")))))) ; :ok-if-already-exists))))
+				(rename-file (replace-endswith script ".el" ".elc") (replace-endswith script ".elc" ".elc-")) :ok-if-already-exists)))
 
 (defun init-enable-script (weight) ; TODO
 	(interactive "P")
 	(let ((script (init-get-script-filename weight t)) (cscript))
 		(if (file-readable-p script)
-				(rename-file script (replace-endswith script ".el-" ".el"))
-;;										 :ok-if-already-exists))
+				(rename-file script (replace-endswith script ".el-" ".el")
+										 :ok-if-already-exists))
 		(setq cscript (replace-endswith script ".el-" ".elc-"))
 		(if (file-readable-p cscript)
-				(rename-file cscript (replace-endswith script ".elc-" ".elc"))))))
-	;;									 :ok-if-already-exists))))
+				(rename-file cscript (replace-endswith script ".elc-" ".elc"))
+			:ok-if-already-exists)))
 
 ;; helpers
 ;;
@@ -127,13 +127,6 @@ Disabled scirpts ends with dash (example: 50-name.el-)."
 	(let ((endswith-regexp (concat endswith "$")))
 	(if (string-match-p endswith-regexp from-string)
 			(replace-regexp-in-string endswith-regexp to-string from-string)
-		from-string)))
-
-(defun replace-startswith (from-string startswith to-string)
-	""
-	(let ((startswith-regexp (concat "^" startswith)))
-	(if (string-match-p startswith-regexp from-string)
-			(replace-regexp-in-string startswith-regexp to-string from-string)
 		from-string)))
 
 (provide 'init-d)
