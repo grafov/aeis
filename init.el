@@ -38,7 +38,9 @@
 
 ;; Set load path
 (let ((default-directory user-emacs-directory))
-  (normal-top-level-add-to-load-path '("" "site-lisp"))
+  (normal-top-level-add-to-load-path '("" "site-lisp")))
+
+(let ((default-directory (concat user-emacs-directory "site-lisp")))
   (normal-top-level-add-subdirs-to-load-path))
 
 ;; Load scripts from init-d
